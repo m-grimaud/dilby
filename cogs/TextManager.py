@@ -22,12 +22,13 @@ class TextManager(commands.Cog, name="Text Processing"):
             self.bot.append_info_log(f"Downloading {message.attachments[0]} as temp.txt")
             with open("temp.txt", "rt", encoding="utf8") as res:
                 for line in res:
+                    line = line.strip()
                     line_len = len(line)
                     if line_len <= 1:
                         # newline
                         continue
                     elif line_len > self.bot.max_message_len:
-                        chunks = [line.strip()[i: i + self.bot.max_message_len] for i in
+                        chunks = [line[i: i + self.bot.max_message_len] for i in
                                   range(0, line_len, self.bot.max_message_len)]
                         for chunk in chunks:
                             await message.channel.send(chunk)
